@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"linkweek-go/httpclient"
 	"log"
 	"net/http"
 	"time"
@@ -25,6 +26,16 @@ type item struct {
 	Score       int    `json:"score"`
 	Title       string `json:"title"`
 	Descendants int    `json:"descendants"`
+}
+
+var (
+	Client httpclient.HttpClient
+)
+
+func init() {
+	Client = &http.Client{
+		Timeout: time.Second * 3,
+	}
 }
 
 func Run(count int) {
@@ -49,11 +60,13 @@ func fetchItems(ids []topStoryId) []item {
 
 func fetchItem(id topStoryId, reqCh chan item) {
 	url := fmt.Sprintf("https://hacker-news.firebaseio.com/v0/item/%d.json", id)
-	client := http.Client{
-		Timeout: time.Second * 3,
+	req, reqErr := http.NewRequest("GET", url, nil)
+
+	if reqErr != nil {
+		log.Fatal(reqErr)
 	}
 
-	resp, getErr := client.Get(url)
+	resp, getErr := Client.Do(req)
 
 	if getErr != nil {
 		log.Fatal(getErr)
@@ -95,11 +108,13 @@ func setItemUrl(i *item) {
 
 func fetchTopIds(amount int) []topStoryId {
 	url := "https://hacker-news.firebaseio.com/v0/topstories.json"
-	client := http.Client{
-		Timeout: time.Second * 2,
+	req, reqErr := http.NewRequest("GET", url, nil)
+
+	if reqErr != nil {
+		log.Fatal(reqErr)
 	}
 
-	resp, getErr := client.Get(url)
+	resp, getErr := Client.Do(req)
 
 	if getErr != nil {
 		log.Fatal(getErr)
