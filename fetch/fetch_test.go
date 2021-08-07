@@ -2,7 +2,7 @@ package fetch
 
 import (
 	"github.com/jarcoal/httpmock"
-	"github.com/magiconair/properties/assert"
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
@@ -58,4 +58,5 @@ func TestFetch(t *testing.T) {
 	// assert
 	assert.Equal(t, items[0].Id, 28096019)
 	assert.Equal(t, items[1].Id, 28090024)
+	assert.Equal(t, 2, len(items))
 }
