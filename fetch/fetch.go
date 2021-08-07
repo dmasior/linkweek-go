@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"linkweek-go/httpclient"
 	"log"
 	"net/http"
 	"time"
@@ -29,7 +28,7 @@ type item struct {
 }
 
 var (
-	Client httpclient.HttpClient
+	Client *http.Client
 )
 
 func init() {
@@ -38,12 +37,12 @@ func init() {
 	}
 }
 
-func Run(count int) {
+func Run(count int) []item {
 	ids := fetchTopIds(count)
 
-	for _, value := range fetchItems(ids) {
-		fmt.Println(value)
-	}
+	items := fetchItems(ids)
+
+	return items
 }
 
 func fetchItems(ids []topStoryId) []item {
