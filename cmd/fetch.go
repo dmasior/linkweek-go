@@ -1,19 +1,24 @@
 package cmd
 
 import (
+	"fmt"
 	"github.com/spf13/cobra"
 	"linkweek-go/fetch"
 )
 
+var (
+	amount int
+)
+
 func init() {
-	rootCmd.AddCommand(versionCmd)
+	fetchCmd.Flags().IntVarP(&amount, "amount", "a", 10, "Amount of top stories to fetch")
+	rootCmd.AddCommand(fetchCmd)
 }
 
-var versionCmd = &cobra.Command{
+var fetchCmd = &cobra.Command{
 	Use:   "fetch",
 	Short: "Fetch top stories",
 	Run: func(cmd *cobra.Command, args []string) {
-		// wip: get count from fetch cmd args
-		fetch.Run(10)
+		fmt.Println(fetch.Run(amount))
 	},
 }
