@@ -1,9 +1,11 @@
 package cmd
 
 import (
-	"fmt"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
+	"log"
 )
 
 var (
@@ -24,8 +26,17 @@ func init() {
 func initConfig() {
 	viper.SetConfigType("toml")
 	viper.SetConfigFile("config.toml")
-	err := viper.ReadInConfig()
-	if err != nil {
-		panic(fmt.Errorf("Fatal error config file: %w \n", err))
+	configErr := viper.ReadInConfig()
+	if configErr != nil {
+		log.Fatal(configErr)
+	}
+
+	dsn := viper.GetString("database.dsn")
+
+	// wip: handle db
+	_, gormErr := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+
+	if gormErr != nil {
+		log.Fatal(gormErr)
 	}
 }
