@@ -1,41 +1,19 @@
 package fetch
 
 import (
+	_ "embed"
 	"github.com/jarcoal/httpmock"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
 var (
-	topStoriesResponseMock = `[ 28096019, 28090024, 28091750, 28094465 ]`
-	firstItemResponseMock  = `{
-"by": "abc",
-"descendants": 46,
-"id": 28096019,
-"kids": [
-28096722,
-28096644
-],
-"score": 123,
-"time": 1628314612,
-"title": "story title",
-"type": "story",
-"url": "https://story.url"
-}`
-	secondItemResponseMock = `{
-"by": "def",
-"descendants": 77,
-"id": 28090024,
-"kids": [
-28090025,
-28096646
-],
-"score": 7,
-"time": 1628314616,
-"title": "2nd story title",
-"type": "story nr 2",
-"url": "https://story2.url"
-}`
+	//go:embed test/mock/http_response/top_story_response_1.json
+	topStoriesResponseMock string
+	//go:embed test/mock/http_response/item_response_1.json
+	firstItemResponseMock string
+	//go:embed test/mock/http_response/item_response_2.json
+	secondItemResponseMock string
 )
 
 func TestFetch(t *testing.T) {
