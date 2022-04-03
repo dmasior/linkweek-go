@@ -24,17 +24,17 @@ func TestFetch(t *testing.T) {
 	httpmock.RegisterResponder("GET", "https://hacker-news.firebaseio.com/v0/topstories.json",
 		httpmock.NewStringResponder(200, topStoriesResponseMock))
 
-	httpmock.RegisterResponder("GET", "https://hacker-news.firebaseio.com/v0/item/28096019.json",
+	httpmock.RegisterResponder("GET", "https://hacker-news.firebaseio.com/v0/Item/28096019.json",
 		httpmock.NewStringResponder(200, firstItemResponseMock))
 
-	httpmock.RegisterResponder("GET", "https://hacker-news.firebaseio.com/v0/item/28090024.json",
+	httpmock.RegisterResponder("GET", "https://hacker-news.firebaseio.com/v0/Item/28090024.json",
 		httpmock.NewStringResponder(200, secondItemResponseMock))
 
 	// act
-	items := Run(2)
+	items := Fetch(2)
 
 	// assert
-	assert.Equal(t, items[0].Id, 28096019)
-	assert.Equal(t, items[1].Id, 28090024)
+	assert.Equal(t, items[0].Id, uint(28096019))
+	assert.Equal(t, items[1].Id, uint(28090024))
 	assert.Equal(t, 2, len(items))
 }

@@ -12,8 +12,8 @@ import (
 
 type topStoryId int
 
-type item struct {
-	Id          int    `json:"id"`
+type Item struct {
+	Id          uint   `json:"id"`
 	Deleted     int    `json:"deleted"`
 	Type        string `json:"type"`
 	By          string `json:"by"`
@@ -22,7 +22,7 @@ type item struct {
 	Dead        bool   `json:"dead"`
 	Kids        []int  `json:"kids"`
 	Url         string `json:"url"`
-	Score       int    `json:"score"`
+	Score       uint   `json:"score"`
 	Title       string `json:"title"`
 	Descendants int    `json:"descendants"`
 }
@@ -37,7 +37,7 @@ func init() {
 	}
 }
 
-func Run(count int) []item {
+func Fetch(count int) []Item {
 	ids := fetchTopIds(count)
 
 	items := fetchItems(ids)
@@ -45,10 +45,10 @@ func Run(count int) []item {
 	return items
 }
 
-func fetchItems(ids []topStoryId) []item {
-	var items []item
+func fetchItems(ids []topStoryId) []Item {
+	var items []Item
 
-	reqCh := make(chan item)
+	reqCh := make(chan Item)
 	for _, itemId := range ids {
 		go fetchItem(itemId, reqCh)
 		items = append(items, <-reqCh)
@@ -57,8 +57,8 @@ func fetchItems(ids []topStoryId) []item {
 	return items
 }
 
-func fetchItem(id topStoryId, reqCh chan item) {
-	url := fmt.Sprintf("https://hacker-news.firebaseio.com/v0/item/%d.json", id)
+func fetchItem(id topStoryId, reqCh chan Item) {
+	url := fmt.Sprintf("https://hacker-news.firebaseio.com/v0/Item/%d.json", id)
 	req, reqErr := http.NewRequest("GET", url, nil)
 
 	if reqErr != nil {
@@ -86,7 +86,7 @@ func fetchItem(id topStoryId, reqCh chan item) {
 		log.Fatal(readErr)
 	}
 
-	var item item
+	var item Item
 
 	jsonErr := json.Unmarshal(body, &item)
 
@@ -101,8 +101,8 @@ func fetchItem(id topStoryId, reqCh chan item) {
 	reqCh <- item
 }
 
-func setItemUrl(i *item) {
-	i.Url = fmt.Sprintf("https://news.ycombinator.com/item?id=%d", i.Id)
+func setItemUrl(i *Item) {
+	i.Url = fmt.Sprintf("https://news.ycombinator.com/Item?id=%d", i.Id)
 }
 
 func fetchTopIds(amount int) []topStoryId {
