@@ -58,7 +58,7 @@ func fetchItems(ids []topStoryId) []Item {
 }
 
 func fetchItem(id topStoryId, reqCh chan Item) {
-	url := fmt.Sprintf("https://hacker-news.firebaseio.com/v0/Item/%d.json", id)
+	url := fmt.Sprintf("https://hacker-news.firebaseio.com/v0/item/%d.json", id)
 	req, reqErr := http.NewRequest("GET", url, nil)
 
 	if reqErr != nil {

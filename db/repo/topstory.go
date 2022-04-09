@@ -5,7 +5,6 @@ import (
 	"linkweek-go/db"
 	"linkweek-go/db/model"
 	"linkweek-go/fetch"
-	"log"
 	"time"
 )
 
@@ -23,11 +22,6 @@ func Persist(items []fetch.Item) {
 		topStories[i] = createTopStoryFromItem(el)
 	}
 
-	err := Db.AutoMigrate(model.TopStory{})
-	if err != nil {
-		log.Fatal(err)
-	}
-
 	Db.Save(topStories)
 }
 
@@ -37,6 +31,7 @@ func createTopStoryFromItem(i fetch.Item) model.TopStory {
 		Url:       i.Url,
 		Title:     i.Title,
 		Score:     i.Score,
-		CreatedAt: time.Time{},
+		Type:      i.Type,
+		CreatedAt: time.Unix(int64(i.Time), 0),
 	}
 }
