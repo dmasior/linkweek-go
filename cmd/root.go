@@ -1,6 +1,8 @@
 package cmd
 
 import (
+	"log"
+
 	"github.com/spf13/cobra"
 )
 
@@ -13,4 +15,12 @@ var (
 
 func Execute() error {
 	return rootCmd.Execute()
+}
+
+func init() {
+	cobra.OnInitialize(initConfig)
+}
+
+func initConfig() {
+	log.SetFlags(log.LstdFlags | log.Lmicroseconds)
 }

@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"sync"
 	"time"
 )
 
@@ -46,18 +47,27 @@ func Fetch(count int) []Item {
 }
 
 func fetchItems(ids []topStoryId) []Item {
-	var items []Item
+	var wg sync.WaitGroup
+	items := make([]Item, 0, len(ids))
 
-	reqCh := make(chan Item)
+	reqCh := make(chan Item, len(ids))
+	wg.Add(len(ids))
+
 	for _, itemId := range ids {
-		go fetchItem(itemId, reqCh)
-		items = append(items, <-reqCh)
+		go fetchItem(&wg, itemId, reqCh)
+	}
+
+	wg.Wait()
+	close(reqCh)
+
+	for item := range reqCh {
+		items = append(items, item)
 	}
 
 	return items
 }
 
-func fetchItem(id topStoryId, reqCh chan Item) {
+func fetchItem(wg *sync.WaitGroup, id topStoryId, reqCh chan Item) {
 	url := fmt.Sprintf("https://hacker-news.firebaseio.com/v0/item/%d.json", id)
 	req, reqErr := http.NewRequest("GET", url, nil)
 
@@ -99,6 +109,7 @@ func fetchItem(id topStoryId, reqCh chan Item) {
 	}
 
 	reqCh <- item
+	wg.Done()
 }
 
 func setItemUrl(i *Item) {

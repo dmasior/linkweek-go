@@ -2,9 +2,10 @@ package fetch
 
 import (
 	_ "embed"
+	"testing"
+
 	"github.com/jarcoal/httpmock"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 var (
@@ -34,7 +35,7 @@ func TestFetch(t *testing.T) {
 	items := Fetch(2)
 
 	// assert
-	assert.Equal(t, items[0].Id, uint(28096019))
-	assert.Equal(t, items[1].Id, uint(28090024))
+	assert.Equal(t, items[0].Id, uint(28090024))
+	assert.Equal(t, items[1].Id, uint(28096019))
 	assert.Equal(t, 2, len(items))
 }

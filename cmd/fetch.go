@@ -1,10 +1,11 @@
 package cmd
 
 import (
-	"fmt"
-	"github.com/spf13/cobra"
 	"linkweek-go/db/repo"
 	"linkweek-go/fetch"
+	"log"
+
+	"github.com/spf13/cobra"
 )
 
 var (
@@ -20,11 +21,11 @@ var fetchCmd = &cobra.Command{
 	Use:   "fetch",
 	Short: "Fetch top stories",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Printf("Fetching [%d] top stories ... ", amount)
+		log.Printf("Fetching [%d] top stories ...\n", amount)
 		items := fetch.Fetch(amount)
-		fmt.Println("ok.")
-		fmt.Print("Persisting ... ")
+		log.Printf("ok.\n")
+		log.Printf("Persisting ...\n")
 		repo.Persist(items)
-		fmt.Println("ok.")
+		log.Printf("ok.\n")
 	},
 }

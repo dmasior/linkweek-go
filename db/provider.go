@@ -1,12 +1,13 @@
 package db
 
 import (
-	"github.com/google/wire"
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
 	"linkweek-go/config"
 	"linkweek-go/db/model"
 	"log"
+
+	"github.com/google/wire"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 func Provider(conf config.Config) *gorm.DB {
