@@ -1,8 +1,9 @@
 package cmd
 
 import (
-	"linkweek-go/db/repo"
-	"linkweek-go/fetch"
+	"linkweek-go/internal/fetch"
+	"linkweek-go/internal/mapper"
+	topstoryRepo "linkweek-go/internal/repos/topstory"
 	"log"
 
 	"github.com/spf13/cobra"
@@ -24,8 +25,9 @@ var fetchCmd = &cobra.Command{
 		log.Printf("Fetching [%d] top stories ...\n", amount)
 		items := fetch.Fetch(amount)
 		log.Printf("ok.\n")
-		log.Printf("Persisting ...\n")
-		repo.Persist(items)
+		log.Printf("Save...\n")
+		topStories := mapper.ItemToDbModels(items)
+		topstoryRepo.Save(topStories...)
 		log.Printf("ok.\n")
 	},
 }

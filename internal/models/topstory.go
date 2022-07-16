@@ -1,4 +1,4 @@
-package model
+package models
 
 import "time"
 
@@ -9,4 +9,5 @@ type TopStory struct {
 	Score     uint      `gorm:"not null"`
 	Type      string    `gorm:"not null"`
 	CreatedAt time.Time `gorm:"not null"`
+	UpdatedAt time.Time `gorm:"not null"`
 }

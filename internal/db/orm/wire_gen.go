@@ -4,7 +4,7 @@
 //go:build !wireinject
 // +build !wireinject
 
-package db
+package orm
 
 import (
 	"gorm.io/gorm"

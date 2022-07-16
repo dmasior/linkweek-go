@@ -69,16 +69,16 @@ func fetchItems(ids []topStoryId) []Item {
 
 func fetchItem(wg *sync.WaitGroup, id topStoryId, reqCh chan Item) {
 	url := fmt.Sprintf("https://hacker-news.firebaseio.com/v0/item/%d.json", id)
-	req, reqErr := http.NewRequest("GET", url, nil)
+	req, err := http.NewRequest("GET", url, nil)
 
-	if reqErr != nil {
-		log.Fatal(reqErr)
+	if err != nil {
+		log.Fatal(err)
 	}
 
-	resp, getErr := Client.Do(req)
+	resp, err := Client.Do(req)
 
-	if getErr != nil {
-		log.Fatal(getErr)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	if resp.Body != nil {
@@ -90,44 +90,44 @@ func fetchItem(wg *sync.WaitGroup, id topStoryId, reqCh chan Item) {
 		}(resp.Body)
 	}
 
-	body, readErr := ioutil.ReadAll(resp.Body)
+	body, err := ioutil.ReadAll(resp.Body)
 
-	if readErr != nil {
-		log.Fatal(readErr)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	var item Item
 
-	jsonErr := json.Unmarshal(body, &item)
+	err = json.Unmarshal(body, &item)
 
-	if jsonErr != nil {
-		log.Fatal(jsonErr)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	if item.Url == "" {
-		setItemUrl(&item)
+		setHnItemUrl(&item)
 	}
 
 	reqCh <- item
 	wg.Done()
 }
 
-func setItemUrl(i *Item) {
+func setHnItemUrl(i *Item) {
 	i.Url = fmt.Sprintf("https://news.ycombinator.com/Item?id=%d", i.Id)
 }
 
 func fetchTopIds(amount int) []topStoryId {
 	url := "https://hacker-news.firebaseio.com/v0/topstories.json"
-	req, reqErr := http.NewRequest("GET", url, nil)
+	req, err := http.NewRequest("GET", url, nil)
 
-	if reqErr != nil {
-		log.Fatal(reqErr)
+	if err != nil {
+		log.Fatal(err)
 	}
 
-	resp, getErr := Client.Do(req)
+	resp, err := Client.Do(req)
 
-	if getErr != nil {
-		log.Fatal(getErr)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	if resp.Body != nil {
@@ -139,18 +139,18 @@ func fetchTopIds(amount int) []topStoryId {
 		}(resp.Body)
 	}
 
-	body, readErr := ioutil.ReadAll(resp.Body)
+	body, err := ioutil.ReadAll(resp.Body)
 
-	if readErr != nil {
-		log.Fatal(readErr)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	var topStoryIds []topStoryId
 
-	jsonErr := json.Unmarshal(body, &topStoryIds)
+	err = json.Unmarshal(body, &topStoryIds)
 
-	if jsonErr != nil {
-		log.Fatal(jsonErr)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// return only first {amount} elements

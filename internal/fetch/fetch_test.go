@@ -35,7 +35,8 @@ func TestFetch(t *testing.T) {
 	items := Fetch(2)
 
 	// assert
-	assert.Equal(t, items[0].Id, uint(28090024))
-	assert.Equal(t, items[1].Id, uint(28096019))
+	ids := []uint{items[0].Id, items[1].Id}
+	assert.Contains(t, ids, uint(28090024))
+	assert.Contains(t, ids, uint(28096019))
 	assert.Equal(t, 2, len(items))
 }
