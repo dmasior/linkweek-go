@@ -1,4 +1,4 @@
-package repos
+package topstory
 
 import (
 	"linkweek-go/internal/db/orm"

@@ -1,13 +1,15 @@
 package config
 
 import (
+	"log"
+
 	"github.com/google/wire"
 	"github.com/spf13/viper"
-	"log"
 )
 
 type Config struct {
-	DatabaseDsn string
+	DatabaseDsn       string
+	LegacyDatabaseDsn string
 }
 
 func Provider() Config {
@@ -19,7 +21,10 @@ func Provider() Config {
 		log.Fatal(configErr)
 	}
 
-	return Config{DatabaseDsn: viper.GetString("database.dsn")}
+	return Config{
+		DatabaseDsn:       viper.GetString("database.dsn"),
+		LegacyDatabaseDsn: viper.GetString("database.legacy.dsn"),
+	}
 }
 
 var ProviderSet = wire.NewSet(Provider)
