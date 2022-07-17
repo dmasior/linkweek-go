@@ -37,4 +37,5 @@ func GetItems(offset uint, limit uint) []models.TopStory {
 
 func GetPublications() []models.Publication {
 	// wip get publications
+	return []models.Publication{}
 }
