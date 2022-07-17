@@ -15,7 +15,6 @@ func init() {
 
 func GetItems(offset uint, limit uint) []models.TopStory {
 	rows, err := db.Query("SELECT id, url, title, score, type, FROM_UNIXTIME(time) as time from item order by id asc limit ? offset ?", limit, offset)
-
 	if err != nil {
 		log.Fatal(err)
 	}

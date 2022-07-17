@@ -28,9 +28,7 @@ type Item struct {
 	Descendants int    `json:"descendants"`
 }
 
-var (
-	Client *http.Client
-)
+var Client *http.Client
 
 func init() {
 	Client = &http.Client{
@@ -70,13 +68,11 @@ func fetchItems(ids []topStoryId) []Item {
 func fetchItem(wg *sync.WaitGroup, id topStoryId, reqCh chan Item) {
 	url := fmt.Sprintf("https://hacker-news.firebaseio.com/v0/item/%d.json", id)
 	req, err := http.NewRequest("GET", url, nil)
-
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	resp, err := Client.Do(req)
-
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -91,7 +87,6 @@ func fetchItem(wg *sync.WaitGroup, id topStoryId, reqCh chan Item) {
 	}
 
 	body, err := ioutil.ReadAll(resp.Body)
-
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -119,13 +114,11 @@ func setHnItemUrl(i *Item) {
 func fetchTopIds(amount int) []topStoryId {
 	url := "https://hacker-news.firebaseio.com/v0/topstories.json"
 	req, err := http.NewRequest("GET", url, nil)
-
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	resp, err := Client.Do(req)
-
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -140,7 +133,6 @@ func fetchTopIds(amount int) []topStoryId {
 	}
 
 	body, err := ioutil.ReadAll(resp.Body)
-
 	if err != nil {
 		log.Fatal(err)
 	}

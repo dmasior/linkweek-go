@@ -12,7 +12,6 @@ import (
 
 func Provider(conf config.Config) *gorm.DB {
 	db, err := gorm.Open(postgres.Open(conf.DatabaseDsn), &gorm.Config{})
-
 	if err != nil {
 		log.Fatal(err)
 	}

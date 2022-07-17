@@ -7,9 +7,7 @@ import (
 	"gorm.io/gorm"
 )
 
-var (
-	Db *gorm.DB
-)
+var Db *gorm.DB
 
 func init() {
 	Db = orm.Build()
