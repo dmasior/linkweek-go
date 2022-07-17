@@ -1,4 +1,4 @@
-package dataimport
+package repository
 
 import (
 	"database/sql"
@@ -33,4 +33,8 @@ func GetItems(offset uint, limit uint) []models.TopStory {
 	}
 
 	return stories
+}
+
+func GetPublications() []models.Publication {
+	// wip get publications
 }

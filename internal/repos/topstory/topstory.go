@@ -16,3 +16,11 @@ func init() {
 func Save(topStory ...models.TopStory) {
 	Db.Save(topStory)
 }
+
+func FindByIds(Ids []int) []models.TopStory {
+	var results []models.TopStory
+
+	Db.Find(&results, Ids)
+
+	return results
+}

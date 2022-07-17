@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"linkweek-go/internal/dataimport"
+	legacyRepo "linkweek-go/internal/repos/legacy"
 	"linkweek-go/internal/repos/topstory"
 	"log"
 
@@ -20,14 +20,13 @@ var importCmd = &cobra.Command{
 		offset := 0
 		limit := 500
 		for {
-			items := dataimport.GetItems(uint(offset), uint(limit))
+			items := legacyRepo.GetItems(uint(offset), uint(limit))
 			if len(items) == 0 {
 				break
 			}
 			topstory.Save(items...)
 			log.Printf("Saved [%d] items\n", len(items))
 			offset += limit
-
 		}
 		log.Printf("done \n")
 	},
