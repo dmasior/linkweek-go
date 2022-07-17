@@ -9,9 +9,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	amount int
-)
+var amount int
 
 func init() {
 	fetchCmd.Flags().IntVarP(&amount, "amount", "a", 5, "Amount of top stories to fetch")
@@ -26,7 +24,7 @@ var fetchCmd = &cobra.Command{
 		items := fetch.Fetch(amount)
 		log.Printf("ok.\n")
 		log.Printf("Save...\n")
-		topStories := mapper.ItemToDbModels(items)
+		topStories := mapper.ItemToDBModels(items)
 		topstoryRepo.Save(topStories...)
 		log.Printf("ok.\n")
 	},

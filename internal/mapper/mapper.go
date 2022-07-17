@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func ItemToDbModels(items []fetch.Item) []models.TopStory {
+func ItemToDBModels(items []fetch.Item) []models.TopStory {
 	r := make([]models.TopStory, 0, len(items))
 
 	for _, i := range items {
