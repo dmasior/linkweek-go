@@ -18,6 +18,7 @@ func GetItems(offset uint, limit uint) []models.TopStory {
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer rows.Close()
 
 	var stories []models.TopStory
 
@@ -33,6 +34,16 @@ func GetItems(offset uint, limit uint) []models.TopStory {
 	}
 
 	return stories
+}
+
+func CountItems() int {
+	var count int
+	err := db.QueryRow("SELECT COUNT(*) FROM item").Scan(&count)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return count
 }
 
 func GetPublications() []models.Publication {
