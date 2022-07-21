@@ -16,3 +16,11 @@ func init() {
 func Save(publication ...models.Publication) {
 	Db.Save(publication)
 }
+
+func Find(ID int) models.Publication {
+	var publication models.Publication
+
+	Db.First(&publication, ID)
+
+	return publication
+}
