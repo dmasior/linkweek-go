@@ -2,7 +2,7 @@ package models
 
 import "time"
 
-type TopStory struct {
+type Story struct {
 	ID        uint      `gorm:"primaryKey"`
 	Url       string    `gorm:"size:512"`
 	Title     string    `gorm:"size:128;not null"`

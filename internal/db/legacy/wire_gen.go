@@ -11,6 +11,10 @@ import (
 	"linkweek-go/config"
 )
 
+import (
+	_ "github.com/go-sql-driver/mysql"
+)
+
 // Injectors from injector.go:
 
 func Build() *sql.DB {

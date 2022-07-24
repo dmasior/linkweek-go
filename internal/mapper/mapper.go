@@ -6,11 +6,11 @@ import (
 	"time"
 )
 
-func ItemToDBModels(items []fetch.Item) []models.TopStory {
-	r := make([]models.TopStory, 0, len(items))
+func ItemToDBModels(items []fetch.Item) []models.Story {
+	r := make([]models.Story, 0, len(items))
 
 	for _, i := range items {
-		r = append(r, models.TopStory{
+		r = append(r, models.Story{
 			ID:        i.Id,
 			Url:       i.Url,
 			Title:     i.Title,

@@ -23,6 +23,6 @@ func LinkPublicationTopStories() {
 		ts := topstory.FindByIds(topStoryPublication.TopStoryIds)
 		pub.TopStories = ts
 		publication.Save(pub)
-		fmt.Printf("Linked publication [%d] top stories\n", pub.ID)
+		fmt.Printf("Linked publication [%d] stories\n", pub.ID)
 	}
 }

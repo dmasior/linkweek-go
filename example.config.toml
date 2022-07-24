@@ -1,4 +1,5 @@
+env = "dev"
 [database]
-dsn="host=localhost user=user password=strongpass dbname=linkweek port=5432 sslmode=disable TimeZone=UTC"
+dsn="host=localhost user=linkweek password=strongpass dbname=linkweek port=5432 sslmode=disable TimeZone=UTC"
 [database.legacy]
 dsn="user:password@tcp(127.0.0.1:3306)/linkweek?parseTime=true"

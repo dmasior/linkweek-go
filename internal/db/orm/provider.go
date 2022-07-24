@@ -16,7 +16,7 @@ func Provider(conf config.Config) *gorm.DB {
 		log.Fatal(err)
 	}
 
-	err = db.AutoMigrate(models.TopStory{}, models.Publication{})
+	err = db.AutoMigrate(models.Story{}, models.Publication{})
 	if err != nil {
 		log.Fatal(err)
 	}

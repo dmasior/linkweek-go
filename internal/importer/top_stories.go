@@ -10,7 +10,7 @@ import (
 )
 
 func ImportTopStories() {
-	log.Println("Import top stories...")
+	log.Println("Import stories...")
 	batchSize := 1000
 	count := legacyRepo.CountItems()
 	batches := int(math.Ceil(float64(count) / float64(batchSize)))

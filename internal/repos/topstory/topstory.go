@@ -13,12 +13,12 @@ func init() {
 	Db = orm.Build()
 }
 
-func Save(topStory ...models.TopStory) {
+func Save(topStory ...models.Story) {
 	Db.Save(topStory)
 }
 
-func FindByIds(Ids []int) []models.TopStory {
-	var results []models.TopStory
+func FindByIds(Ids []int) []models.Story {
+	var results []models.Story
 
 	Db.Find(&results, Ids)
 

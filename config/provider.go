@@ -8,6 +8,7 @@ import (
 )
 
 type Config struct {
+	Env               string
 	DatabaseDsn       string
 	LegacyDatabaseDsn string
 }
@@ -22,6 +23,7 @@ func Provider() Config {
 	}
 
 	return Config{
+		Env:               viper.GetString("env"),
 		DatabaseDsn:       viper.GetString("database.dsn"),
 		LegacyDatabaseDsn: viper.GetString("database.legacy.dsn"),
 	}
